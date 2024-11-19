@@ -1,12 +1,14 @@
-/// <reference types='vitest' />
-import { defineConfig, loadEnv, UserConfig } from 'vite'
-import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
-import vue from '@vitejs/plugin-vue';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
-import VueRouter from 'unplugin-vue-router/vite'
-import {resolve} from 'path';
 import type { InlineConfig } from 'vitest/node'
 
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'node:path'
+import VueRouter from 'unplugin-vue-router/vite'
+/// <reference types='vitest' />
+import type { UserConfig } from 'vite'
+
+import { defineConfig, loadEnv } from 'vite'
 
 export type ViteConfig = UserConfig & { test?: InlineConfig }
 
@@ -41,10 +43,10 @@ export default defineConfig(({ mode }) => {
 				strictMessage: false,
 			}),
 		],
-		// Uncomment this if you are using workers.
-		// worker: {
-		//  plugins: [ nxViteTsPaths() ],
-		// },
+
+		worker: {
+			plugins: [nxViteTsPaths()],
+		},
 		build: {
 			outDir: '../../dist/apps/app1',
 			emptyOutDir: true,
@@ -54,7 +56,6 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 	}
-
 
 	if (mode === 'test') {
 		config.test = {
@@ -83,4 +84,4 @@ export default defineConfig(({ mode }) => {
 	}
 
 	return config
-});
+})
