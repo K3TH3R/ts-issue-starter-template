@@ -71,7 +71,10 @@ export default defineConfig(({ mode }) => {
 				reporter: ['json', 'html'],
 				reportsDirectory: '../../coverage/apps/app1',
 			},
-			setupFiles: ['@vitest/web-worker'],
+			setupFiles: [
+				'@vitest/web-worker',
+				'./vitest.setup-dom-matchers.ts',
+			],
 		}
 	}
 

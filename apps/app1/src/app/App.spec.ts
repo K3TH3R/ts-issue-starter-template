@@ -1,13 +1,52 @@
-import { mount } from '@vue/test-utils'
+import { cleanup, render } from '@testing-library/vue'
 import { describe, expect, it } from 'vitest'
+
+import PrimeVue from 'primevue/config'
 
 import router from '../router'
 import App from './App.vue'
 
 describe('app', () => {
+	afterEach(async () => {
+		cleanup()
+	})
+
+	// it('renders properly #2', async () => {
+	// 	const { container, getByTestId } = render(App, {
+	// 		global: {
+	// 			plugins: [router, PrimeVue],
+	// 		},
+	// 	})
+	// 	await router.isReady()
+
+	// 	const welcome = getByTestId('welcome')
+	// 	expect(welcome).toHaveTextContent('Welcome app1 👋')
+	// 	expect(container).toMatchSnapshot()
+	// })
+
 	it('renders properly', async () => {
-		const wrapper = mount(App, { global: { plugins: [router] } })
+		const { container, getByTestId } = render(App, {
+			global: {
+				plugins: [router, PrimeVue],
+			},
+		})
 		await router.isReady()
-		expect(wrapper.text()).toContain('Welcome app1 👋')
+
+		const welcome = getByTestId('welcome')
+		expect(welcome).toHaveTextContent('Welcome app1 👋')
+		expect(container).toMatchSnapshot()
+	})
+
+	it('renders properly #3', async () => {
+		const { container, getByTestId } = render(App, {
+			global: {
+				plugins: [router, PrimeVue],
+			},
+		})
+		await router.isReady()
+
+		const welcome = getByTestId('welcome')
+		expect(welcome).toHaveTextContent('Welcome app1 👋')
+		expect(container).toMatchSnapshot()
 	})
 })

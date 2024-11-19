@@ -1,14 +1,51 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { ref } from 'vue'
+import { RouterLink, RouterView } from 'vue-router'
+
+import Button from 'primevue/button'
+import DatePicker from 'primevue/datepicker'
+import InputGroup from 'primevue/inputgroup'
+import InputGroupAddon from 'primevue/inputgroupaddon'
+import InputText from 'primevue/inputtext'
+
+const query = ref('')
+
+function handleSearchQueryUpdate(value: string) {
+	query.value = value
+}
 </script>
 
 <template>
 	<header>
 		<nav>
-			<RouterLink to="/">Home</RouterLink>
-			<RouterLink to="/about">About</RouterLink>
+			<RouterLink to="/">
+				Home
+			</RouterLink>
+			<RouterLink to="/about">
+				About
+			</RouterLink>
 		</nav>
 	</header>
+	<div>
+		<InputGroup>
+			<InputGroupAddon>
+				<span class="pi pi-search" />
+			</InputGroupAddon>
+			<InputText
+				v-model="query"
+				size="small"
+				@update:model-value="handleSearchQueryUpdate"
+			/>
+		</InputGroup>
+
+		<Button
+			severity="secondary"
+			size="small"
+			variant="outlined"
+		>
+			Button Text
+		</Button>
+	</div>
 	<RouterView />
 </template>
 
