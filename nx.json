@@ -1,54 +1,66 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "targetDefaults": {
-    "dev": {
-      "cache": true
-    },
-    "build": {
-      "cache": true
-    }
-  },
-  "defaultBase": "master",
-  "plugins": [
-    {
-      "plugin": "@nx/vite/plugin",
-      "options": {
-        "buildTargetName": "vite:build",
-        "testTargetName": "test",
-        "serveTargetName": "serve",
-        "previewTargetName": "vite:preview",
-        "serveStaticTargetName": "serve-static"
-      }
-    },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    },
-    {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      }
-    }
-  ],
-  "nxCloudAccessToken": "Y2YyMjFlZTgtOGZhZC00NTFlLTlmNDgtNjUzZjRlNzM0N2UwfHJlYWQtd3JpdGU=",
-  "generators": {
-    "@nx/react": {
-      "application": {
-        "babel": true,
-        "style": "css",
-        "linter": "eslint",
-        "bundler": "vite"
-      },
-      "component": {
-        "style": "css"
-      },
-      "library": {
-        "style": "css",
-        "linter": "eslint"
-      }
-    }
-  }
+	"$schema": "./node_modules/nx/schemas/nx-schema.json",
+	"tasksRunnerOptions": {
+		"default": {
+			"options": {
+				"cacheableOperations": ["build", "lint", "test", "e2e"]
+			}
+		}
+	},
+	"targetDefaults": {
+		"dev": {
+			"cache": true
+		},
+		"build": {
+			"executor": "nx:run-commands",
+			"dependsOn": ["^build"],
+			"cache": true,
+			"inputs": [
+				"{projectRoot}/**/*.ts",
+				"{projectRoot}/**/*.vue",
+				"!{projectRoot}/**/*.spec.ts",
+				"!{projectRoot}/**/*.spec.data.ts"
+			],
+			"options": {
+				"command": "vite build"
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"],
+			"cache": true,
+			"options": {
+				"fix": true,
+				"cache": true,
+				"cacheLocation": ".nx/eslintcache"
+			}
+		}
+	},
+	"defaultBase": "master",
+	"plugins": [
+		{
+			"plugin": "@nx/vite/plugin",
+			"options": {
+				"buildTargetName": "vite:build",
+				"testTargetName": "test",
+				"serveTargetName": "serve",
+				"previewTargetName": "vite:preview",
+				"serveStaticTargetName": "serve-static"
+			}
+		},
+		{
+			"plugin": "@nx/eslint/plugin",
+			"options": {
+				"targetName": "lint"
+			}
+		}
+	],
+	"generators": {
+		"@nx/web:application": {
+			"style": "css",
+			"linter": "eslint",
+			"unitTestRunner": "vitest",
+			"e2eTestRunner": "none"
+		}
+	}
 }

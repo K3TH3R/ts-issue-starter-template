@@ -1,0 +1,13 @@
+{
+	"recommendations": [
+		"vue.vscode-typescript-vue-plugin",
+		"editorconfig.editorconfig",
+		"dbaeumer.vscode-eslint",
+		"csstools.postcss",
+		"mikestead.dotenv",
+		"statelyai.stately-vscode",
+		"nrwl.angular-console",
+		"vitest.explorer",
+		"esbenp.prettier-vscode"
+	]
+}
